@@ -20,6 +20,7 @@ from qgis.core import *
 )
 @alg.input(type=alg.NUMBER, name="MIN_VALUE", label="Min value")
 @alg.input(type=alg.NUMBER, name="MAX_VALUE", label="Max value")
+@alg.input(type=alg.BOOL, name="REVERSED", label="Reversed")
 @alg.input(type=alg.SINK, name="OUTPUT", label="Output layer")
 def normalize(instance, parameters, context, feedback, inputs):
     """
@@ -33,6 +34,7 @@ def normalize(instance, parameters, context, feedback, inputs):
 
     upper = instance.parameterAsDouble(parameters, "MAX_VALUE", context)
     lower = instance.parameterAsDouble(parameters, "MIN_VALUE", context)
+    reversed = instance.parameterAsBool(parameters, "REVERSED", context)
 
     output_fields = source.fields()
     output_fields.append(QgsField(f"{column_name}_norm", QVariant.Double))
@@ -82,8 +84,10 @@ def normalize(instance, parameters, context, feedback, inputs):
         else:
             norm_value = float((value - lower) / (upper - lower))
 
+        output_value = norm_value if reversed is False else 1.0 - norm_value
+
         out_feat.setAttributes(
-            [*feat.attributes(), norm_value * 10, f"{lower}/{upper}"]
+            [*feat.attributes(), output_value * 10, f"{lower}/{upper}"]
         )
 
         sink.addFeature(out_feat, QgsFeatureSink.FastInsert)
