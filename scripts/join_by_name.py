@@ -12,6 +12,7 @@ MASTER_COLUMN_NAME = "MASTER_COLUMN_NAME"
 FILE_COLUMN_NAME = "FILE_COLUMN_NAME"
 THRESOLD = "THRESHOLD"
 OUTPUT = "OUTPUT"
+INCLUDE_FIELDS = "INCLUDE_FIELDS"
 
 
 def feature_to_dict(qgs_feature):
@@ -32,26 +33,31 @@ def match_score(word_1, word_2):
 @alg.input(
     type=alg.SOURCE,
     name=MASTER_LAYER,
-    label="Master layer",
-    default="/Users/jorgemartinez/data/wfp/risk_analysis/ECU/ecu_bnd_adm2_ge/ecu_bnd_adm2_ge.shp",
+    label="Master layer"
 )
 @alg.input(
     type=alg.SOURCE,
     name=FILE_NAME,
-    label="File name",
-    default="/Users/jorgemartinez/Desktop/gsap_errors.xlsx",
+    label="File name"
 )
 @alg.input(
-    type=alg.STRING,
+    type=alg.FIELD,
     name=MASTER_COLUMN_NAME,
     label="Master column name",
-    default="adm1_name",
+    parentLayerParameterName=MASTER_LAYER
 )
 @alg.input(
-    type=alg.STRING,
+    type=alg.FIELD,
     name=FILE_COLUMN_NAME,
     label="File column name",
-    default="adm1_name",
+    parentLayerParameterName=FILE_NAME
+)
+@alg.input(
+    type=alg.FIELD,
+    name=INCLUDE_FIELDS,
+    label="Fields from file to include",
+    parentLayerParameterName=FILE_NAME,
+    allowMultiple=True
 )
 @alg.input(type=alg.DISTANCE, name=THRESOLD, label="Threshold", default=0.8)
 @alg.input(type=alg.SINK, name=OUTPUT, label="Output layer")
@@ -59,30 +65,25 @@ def location_resolution_tool(instance, parameters, context, feedback, inputs):
     """
     Join by column name
     """
-    master_layer = instance.parameterAsSource(
-        parameters, MASTER_LAYER, context
-    )
+    master_layer = instance.parameterAsSource(parameters, MASTER_LAYER, context)
     master_column_name = instance.parameterAsString(
         parameters, MASTER_COLUMN_NAME, context
     )
-
     file_source = instance.parameterAsSource(parameters, FILE_NAME, context)
-    file_column_name = instance.parameterAsString(
-        parameters, FILE_COLUMN_NAME, context
-    )
+    file_column_name = instance.parameterAsFields(parameters, FILE_COLUMN_NAME, context)[0]
     threshold = instance.parameterAsDouble(parameters, THRESOLD, context)
+
+    include_fields = instance.parameterAsFields(parameters, INCLUDE_FIELDS, context)
+    print(include_fields)
 
     # Adding additional columns from excel file.
     file_fields = file_source.fields().toList()
     output_fields = master_layer.fields()
-    columns_to_append = [
-        f for f in file_fields if f.name() != file_column_name
-    ]
+    columns_to_append = [f for f in file_fields if f.name() in include_fields]
     [output_fields.append(c) for c in columns_to_append]
 
     file_list = [
-        feature_to_dict(f)
-        for f in file_source.getFeatures(QgsFeatureRequest())
+        feature_to_dict(f) for f in file_source.getFeatures(QgsFeatureRequest())
     ]
 
     (sink, dest_id) = instance.parameterAsSink(
@@ -109,9 +110,7 @@ def location_resolution_tool(instance, parameters, context, feedback, inputs):
                 for r, i in enumerate(file_list)
             ]
             sorted_matched_scores = sorted(
-                match_scores_list,
-                key=lambda x: x["score"],
-                reverse=True,
+                match_scores_list, key=lambda x: x["score"], reverse=True
             )
 
             # Pick match with highest score.
