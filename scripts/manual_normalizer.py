@@ -13,10 +13,10 @@ from qgis.core import *
 )
 @alg.input(type=alg.SOURCE, name="INPUT", label="Input layer")
 @alg.input(
-    type=alg.STRING,
+    type=alg.FIELD,
     name="COLUMN_NAME",
     label="Column name (value)",
-    default="rwi_float_",
+    parentLayerParameterName="INPUT"
 )
 @alg.input(type=alg.NUMBER, name="MIN_VALUE", label="Min value")
 @alg.input(type=alg.NUMBER, name="MAX_VALUE", label="Max value")
@@ -28,9 +28,7 @@ def normalize(instance, parameters, context, feedback, inputs):
     """
 
     source = instance.parameterAsSource(parameters, "INPUT", context)
-    column_name = instance.parameterAsString(
-        parameters, "COLUMN_NAME", context
-    )
+    column_name = instance.parameterAsFields(parameters, "COLUMN_NAME", context)[0]
 
     upper = instance.parameterAsDouble(parameters, "MAX_VALUE", context)
     lower = instance.parameterAsDouble(parameters, "MIN_VALUE", context)
