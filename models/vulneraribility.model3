@@ -41,11 +41,11 @@
                 <Option name="type" type="int" value="10"/>
               </Option>
               <Option type="Map">
-                <Option name="aggregate" type="QString" value="sum"/>
+                <Option name="aggregate" type="QString" value="mean"/>
                 <Option name="delimiter" type="QString" value=","/>
-                <Option name="input" type="QString" value="rcsi_people"/>
+                <Option name="input" type="QString" value="fcs_prevalence"/>
                 <Option name="length" type="int" value="0"/>
-                <Option name="name" type="QString" value="rcsi_people_sum"/>
+                <Option name="name" type="QString" value="prevalence"/>
                 <Option name="precision" type="int" value="0"/>
                 <Option name="type" type="int" value="4"/>
               </Option>
@@ -685,21 +685,9 @@
     </Option>
   </Option>
   <Option name="designerParameterValues" type="Map">
-    <Option name="gsapfile" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/gsap_fixed.csv"/>
-    <Option name="gsapfile (2)" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/mdpi_fixed.csv"/>
+    <Option name="gsapfile" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/gsap_filtered.xlsx"/>
+    <Option name="gsapfile (2)" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/mdpi_filtered.xlsx"/>
     <Option name="iso3" type="QString" value="ECU"/>
-    <Option name="native:fieldcalculator_1:res" type="QgsProcessingOutputLayerDefinition">
-      <Option type="Map">
-        <Option name="create_options" type="Map">
-          <Option name="fileEncoding" type="QString" value="System"/>
-        </Option>
-        <Option name="sink" type="Map">
-          <Option name="active" type="bool" value="true"/>
-          <Option name="type" type="int" value="1"/>
-          <Option name="val" type="QString" value="TEMPORARY_OUTPUT"/>
-        </Option>
-      </Option>
-    </Option>
     <Option name="rwifile" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/ecu_relative_wealth_index.csv"/>
     <Option name="script:join_by_name_3:merged_layer" type="QgsProcessingOutputLayerDefinition">
       <Option type="Map">
