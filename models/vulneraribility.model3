@@ -540,8 +540,8 @@
       </Option>
       <Option name="component_description" type="QString" value="Join GSAP data"/>
       <Option name="component_height" type="double" value="30"/>
-      <Option name="component_pos_x" type="double" value="1728.32507493296"/>
-      <Option name="component_pos_y" type="double" value="499.9643026001556"/>
+      <Option name="component_pos_x" type="double" value="1725.0744526913495"/>
+      <Option name="component_pos_y" type="double" value="502.487900288669"/>
       <Option name="component_width" type="double" value="200"/>
       <Option name="dependencies"/>
       <Option name="id" type="QString" value="script:join_by_name_2"/>
@@ -631,18 +631,8 @@
           <Option name="component_pos_x" type="double" value="2248.328906022928"/>
           <Option name="component_pos_y" type="double" value="551.7824672226426"/>
           <Option name="component_width" type="double" value="200"/>
-          <Option name="default_value" type="Map">
-            <Option name="class" type="QString" value="QgsProcessingOutputLayerDefinition"/>
-            <Option name="create_options" type="Map">
-              <Option name="fileEncoding" type="QString" value="System"/>
-            </Option>
-            <Option name="sink" type="Map">
-              <Option name="active" type="bool" value="true"/>
-              <Option name="type" type="int" value="1"/>
-              <Option name="val" type="QString" value="TEMPORARY_OUTPUT"/>
-            </Option>
-          </Option>
-          <Option name="mandatory" type="bool" value="true"/>
+          <Option name="default_value" type="invalid"/>
+          <Option name="mandatory" type="bool" value="false"/>
           <Option name="name" type="QString" value="merged_layer"/>
           <Option name="output_name" type="QString" value="OUTPUT"/>
           <Option name="outputs_collapsed" type="bool" value="true"/>
@@ -698,6 +688,18 @@
     <Option name="gsapfile" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/gsap_fixed.csv"/>
     <Option name="gsapfile (2)" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/mdpi_fixed.csv"/>
     <Option name="iso3" type="QString" value="ECU"/>
+    <Option name="native:fieldcalculator_1:res" type="QgsProcessingOutputLayerDefinition">
+      <Option type="Map">
+        <Option name="create_options" type="Map">
+          <Option name="fileEncoding" type="QString" value="System"/>
+        </Option>
+        <Option name="sink" type="Map">
+          <Option name="active" type="bool" value="true"/>
+          <Option name="type" type="int" value="1"/>
+          <Option name="val" type="QString" value="TEMPORARY_OUTPUT"/>
+        </Option>
+      </Option>
+    </Option>
     <Option name="rwifile" type="QString" value="/Users/gis/Documents/Risk analysis/ECU/data/ecu_relative_wealth_index.csv"/>
     <Option name="script:join_by_name_3:merged_layer" type="QgsProcessingOutputLayerDefinition">
       <Option type="Map">
@@ -827,18 +829,7 @@
     <Option name="script:join_by_name_3:merged_layer" type="Map">
       <Option name="create_by_default" type="bool" value="true"/>
       <Option name="data_type" type="int" value="-1"/>
-      <Option name="default" type="QgsProcessingOutputLayerDefinition">
-        <Option type="Map">
-          <Option name="create_options" type="Map">
-            <Option name="fileEncoding" type="QString" value="System"/>
-          </Option>
-          <Option name="sink" type="Map">
-            <Option name="active" type="bool" value="true"/>
-            <Option name="type" type="int" value="1"/>
-            <Option name="val" type="QString" value="TEMPORARY_OUTPUT"/>
-          </Option>
-        </Option>
-      </Option>
+      <Option name="default" type="invalid"/>
       <Option name="defaultGui" type="invalid"/>
       <Option name="description" type="QString" value="merged_layer"/>
       <Option name="flags" type="int" value="0"/>
